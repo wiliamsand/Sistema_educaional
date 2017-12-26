@@ -16,23 +16,21 @@ class UsersTableSeeder extends Seeder
 	{
 		factory( User::class)->create([
 			'email'=>'batista@gmail.com',
-			'enrolment' =>100000
+			'enrolment'=> 10000
 		])->each(function (User $user){
 			User::assingRole($user,User::ROLE_ADMIN);
 			$user->save();
 		});
 
-		factory( User::class)->create([
-			'enroment'=> User::assignEnrolment(new User(),User::ROLE_TEACHER)
-		])->each(function (User $user){
+		factory( User::class,10)->create([])
+		    ->each(function (User $user){
 			User::assingRole($user,User::ROLE_TEACHER);
 			$user->save();
 		});
 
-		factory( User::class)->create([
-			'enroment'=> User::assignEnrolment(new User(),User::ROLE_STUDENT)
-		])->each(function (User $user){
-			User::assingRole($user,User::ROLE_STUDENT  );
+		factory( User::class,10)->create([])
+		  ->each(function (User $user){
+			User::assingRole($user,User::ROLE_STUDENT);
 			$user->save();
 		});
 	}

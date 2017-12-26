@@ -50,7 +50,7 @@ class User extends Authenticatable implements TableInterface
 		    $token = \Password::broker()->createToken($user);
 		    $user->notify(new UserCreated($token));
 	    }
-	    return compact('user', 'password');
+	    return compact('user','password');
     }
 
     public static function assignEnrolment(User $user,$type){
@@ -70,7 +70,7 @@ class User extends Authenticatable implements TableInterface
 			self::ROLE_STUDENT => Student::class,
 		];
 		$model= $types[$type];
-		$model::create([]);
+		$model = $model::create([]);
 		$user->userable()->associate($model);
 	}
 

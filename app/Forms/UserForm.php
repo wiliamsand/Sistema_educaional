@@ -7,6 +7,14 @@ use SGA\Models\User;
 
 class UserForm extends Form
 {
+	protected function roles(){
+		return [
+			User::ROLE_ADMIN =>'Administrador',
+			User::ROLE_TEACHER =>'Professor',
+			User::ROLE_STUDENT =>'Aluno'
+		];
+	}
+
     public function buildForm()
     {
     	$id = $this->getData('id');
@@ -22,7 +30,7 @@ class UserForm extends Form
 	        ->add('type', 'select',[
 		        'label'  => 'Tipo de usuário',
 		        'choices'=> $this->roles(),
-		        'rules' => 'required|in:'.implode(',',array_keys($this->roles()))
+		        'rules' => "required|in:" . implode(',', array_keys($this->roles()))
 	        ])
 	        ->add('send_mail', 'checkbox',[
 		        'label'  => 'Enviar email de boas vindas',
@@ -30,11 +38,5 @@ class UserForm extends Form
 		        'checked'=> false
         ]);
     }
-    protected function roles(){
-	   return [
-		    User::ROLE_ADMIN =>'Administrador',
-		    User::ROLE_TEACHER =>'Professor',
-		    User::ROLE_STUDENT =>'Aluno'
-	    ];
-    }
+
 }

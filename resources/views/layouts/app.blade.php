@@ -25,24 +25,30 @@
         @php
             $navbar = Navbar::withBrand(config('app.name'),route('admin.dashboard'))->inverse();
            if(Auth::check()){
-               $arrayLinks = [
-                   ['link' => route('admin.users.index'),'title' => 'Usuários'],
-               ];
-                $arrayLinksRight = [
-                   [
-                        Auth::user()->name,
-                        [
+                if(\Gate::allows('admin')){
+                       $arrayLinks = [
+                           ['link' => route('admin.users.index'),'title' => 'Usuários'],
+                       ];
+                       $navbar -> withContent(Navigation::links($arrayLinks));
+                   }
+                    $arrayLinksRight = [
+                       [
+                            Auth::user()->name,
                             [
-                                'link' => route('logout'),
-                                'title' => 'Logout',
-                                'linkAttributes'=>
-                                ['onclick'=>"event.preventDefault();document.getElementById(\"form-logout\").submit();"]
+                            	[
+                            	    'link'  =>route('admin.users.settings.edit'),
+                            	    'title' => 'Configurações'
+                            	],
+                                [
+                                    'link' => route('logout'),
+                                    'title' => 'Logout',
+                                    'linkAttributes'=>
+                                    ['onclick'=>"event.preventDefault();document.getElementById(\"form-logout\").submit();"]
+                                ]
                             ]
-                        ]
-                   ],
-               ];
-               $navbar -> withContent(Navigation::links($arrayLinks))
-                       -> withContent(Navigation::links($arrayLinksRight)->right());
+                       ],
+                   ];
+               $navbar -> withContent(Navigation::links($arrayLinksRight)->right());
 
                $formLogout = FormBuilder::plain([
                     'id'     => 'form-logout',

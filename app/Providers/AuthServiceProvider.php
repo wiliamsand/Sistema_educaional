@@ -4,6 +4,7 @@ namespace SGA\Providers;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use SGA\Models\Admin;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -24,7 +25,8 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        //
+        \Gate::define('admin',function($user){
+        	return $user->userable instanceof Admin;
+        });
     }
 }

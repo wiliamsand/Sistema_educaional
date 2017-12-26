@@ -5,6 +5,7 @@ namespace SGA\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use SGA\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use SGA\Models\Admin;
 
 
 class LoginController extends Controller {
@@ -19,8 +20,9 @@ class LoginController extends Controller {
 	protected function credentials( Request $request ) {
 		$data                 = $request->only( $this->username(), 'password' );
 		$usernameKey          = $this->usernameKey();
-		$data[ $usernameKey ] = $data[ $this->username() ];
-		unset( $data[ $this->username() ] );
+		$data[$usernameKey]   = $data[ $this->username() ];
+		$data['userable_type']= Admin::class;
+		unset($data[ $this->username()]);
 
 		return $data;
 	}

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
-	public function user(){
+	public function userable(){
 		return $this->morphOne(User::class,'userable');
 	}
 }
