@@ -11,7 +11,9 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('dist/css/AdminLTE.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('dist/css/skins/_all-skins.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
     <style type="text/css">
         @media print{
             .hidden-print {
@@ -24,10 +26,14 @@
     <div id="app">
         @php
             $navbar = Navbar::withBrand(config('app.name'),route('admin.dashboard'))->inverse();
+
            if(Auth::check()){
                 if(\Gate::allows('admin')){
                        $arrayLinks = [
                            ['link' => route('admin.users.index'),'title' => 'Usuários'],
+                           ['link' => route('admin.subjects.index'),'title' => 'Disciplina'],
+                           ['link' => route('admin.class_informations.index'),'title' => 'Turma'],
+
                        ];
                        $navbar -> withContent(Navigation::links($arrayLinks));
                    }
@@ -75,6 +81,6 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/admin.js') }}"></script>
 </body>
 </html>
